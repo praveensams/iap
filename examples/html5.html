@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Video.js Resolution Switcher</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="../node_modules/video.js/dist/video-js.css" rel="stylesheet">
+  <link href="../lib/videojs-resolution-switcher.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #777;
+    }
+    .info {
+      background-color: #eee;
+      border: thin solid #333;
+      border-radius: 3px;
+      padding: 0 5px;
+      text-align: center;
+    }
+    .video-js {
+      margin: 40px auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="info">
+    <p>
+      Set sources dynamically
+    </p>
+  </div>
+
+  <video id='video' class="video-js vjs-default-skin"></video>
+
+  <div class="info">
+    <p>
+      Set sources inside <code>&ltvideo&gt</code> tag
+    </p>
+  </div>
+
+  <video id="video_1" class="video-js vjs-default-skin" width="1000" controls data-setup='{}' muted>
+    <source src="https://vjs.zencdn.net/v/oceans.mp4?480" type='video/mp4' label='SD' res='480' />
+    <source src="https://vjs.zencdn.net/v/oceans.mp4?1080" type='video/mp4' label='HD' res='1080'/>
+    <source src="https://vjs.zencdn.net/v/oceans.mp4?144" type='video/mp4' label='phone' res='144'/>
+    <source src="https://vjs.zencdn.net/v/oceans.mp4?2160" type='video/mp4' label='4k' res='2160'/>
+  </video>
+  
+
+  <script src="../node_modules/video.js/dist/video.js"></script>
+  <script>
+    videojs.options.flash.swf = "../node_modules/video.js/dist/video-js.swf"
+  </script>
+  <script src="../lib/videojs-resolution-switcher.js"></script>
+  <script>
+    // fire up the plugin
+    videojs('video', {
+      controls: true,
+      muted: true,
+      width: 1000,
+      plugins: {
+        videoJsResolutionSwitcher: {
+          ui: true,
+          default: 'low', // Default resolution [{Number}, 'low', 'high'],
+          dynamicLabel: true // Display dynamic labels or gear symbol
+        }
+      }
+    }, function(){
+      var player = this;
+      window.player = player
+      // Azure check
+      /*player.updateSrc([
+        {
+          src: 'https://prodatblob.blob.core.windows.net/asset-8c43310d-037e-4e66-92ba-312e91f53039/69251u34l2m101nm_H264_1296kbps_AAC_und_ch2_96kbps.mp4?sv=2012-02-12&sr=c&si=0f6f249e-158f-4a9a-b2df-5b98cb92b10c&sig=6yVUtlkryLVEy7f5gc3lRK8yD5zPKjaJXMZvFMR5b00%3D&st=2017-10-09T14%3A27%3A33Z&se=2117-10-09T20%3A27%3A33Z',
+          type: 'video/mp4',
+          label: '480',
+          res: 480
+        },
+        {
+          src: 'https://prodatblob.blob.core.windows.net/asset-8c43310d-037e-4e66-92ba-312e91f53039/69251u34l2m101nm_H264_664kbps_AAC_und_ch2_96kbps.mp4?sv=2012-02-12&sr=c&si=0f6f249e-158f-4a9a-b2df-5b98cb92b10c&sig=6yVUtlkryLVEy7f5gc3lRK8yD5zPKjaJXMZvFMR5b00%3D&st=2017-10-09T14%3A27%3A33Z&se=2117-10-09T20%3A27%3A33Z',
+          type: 'video/mp4',
+          label: '360',
+          res: 360
+        },
+      ])*/
+      // Akamai check row
+      player.updateSrc([
+        {
+          src: 'https://assets.wallstreetenglish.com/asset-e5b0e151-8e17-4a5d-8849-98225900029c/nsevid02u05l1m1013_H264_1896kbps_AAC_und_ch2_128kbps.mp4?sv=2012-02-12&sr=c&si=afdeeac0-5c75-4622-86f5-5b3a9909bddc&sig=t34E4002wpx1i9QV2RxLvebZvlvnFA4cD%2FhI6VLoL5c%3D&st=2016-07-15T11%3A27%3A04Z&se=2116-07-15T17%3A27%3A04Z',
+          type: 'video/mp4',
+          label: '480',
+          res: 480
+        },
+        {
+          src: 'https://assets-stg.wallstreetenglish.com/asset-e5b0e151-8e17-4a5d-8849-98225900029c/nsevid02u05l1m1013_H264_1896kbps_AAC_und_ch2_128kbps.mp4?sv=2012-02-12&sr=c&si=afdeeac0-5c75-4622-86f5-5b3a9909bddc&sig=t34E4002wpx1i9QV2RxLvebZvlvnFA4cD%2FhI6VLoL5c%3D&st=2016-07-15T11%3A27%3A04Z&se=2116-07-15T17%3A27%3A04Z',
+          type: 'video/mp4',
+          label: '240',
+          res: 240
+        },
+      ])
+
+ // Akamai check china
+     /* player.updateSrc([
+        {
+           src: 'https://assets.wallstreetenglish.com.cn/asset-e5b0e151-8e17-4a5d-8849-98225900029c/nsevid02u05l1m1013_H264_1896kbps_AAC_und_ch2_128kbps.mp4?sv=2012-02-12&sr=c&si=afdeeac0-5c75-4622-86f5-5b3a9909bddc&sig=t34E4002wpx1i9QV2RxLvebZvlvnFA4cD%2FhI6VLoL5c%3D&st=2016-07-15T11%3A27%3A04Z&se=2116-07-15T17%3A27%3A04Z',
+          type: 'video/mp4',
+          label: '480',
+          res: 480
+        },
+        {
+          src: 'https://assets-stg.wallstreetenglish.com.cn/asset-e5b0e151-8e17-4a5d-8849-98225900029c/nsevid02u05l1m1013_H264_1896kbps_AAC_und_ch2_128kbps.mp4?sv=2012-02-12&sr=c&si=afdeeac0-5c75-4622-86f5-5b3a9909bddc&sig=t34E4002wpx1i9QV2RxLvebZvlvnFA4cD%2FhI6VLoL5c%3D&st=2016-07-15T11%3A27%3A04Z&se=2116-07-15T17%3A27%3A04Z',
+          type: 'video/mp4',
+          label: '240',
+          res: 240
+        },
+      ])*/
+
+      player.on('resolutionchange', function(){
+        console.info('Source changed to %s', player.src())
+      })
+
+    })
+  </script>
+
+
+  <script>
+    videojs('video_1').videoJsResolutionSwitcher()
+  </script>
+</body>
+</html>
